@@ -116,6 +116,7 @@ function displayMap() {
         .on("mouseout", function(e) {
             svg.select("rect").remove();
             svg.selectAll("text").remove();
+            svg.selectAll(".icon").remove();
 
             d3.select(this)
             .transition()
@@ -147,7 +148,7 @@ function getAreaColor(areaName) {
 }
 
 // アイコンの取得
-function displayIcon(index) {
+function displayIcon(index, x, y, width, height) {
 
     var images = [
         'diaper_c.png',
@@ -163,12 +164,13 @@ function displayIcon(index) {
 
     var icon = d3.select("svg")
         .append('image')
+        .attr('class', 'icon')
         .attr('xlink:href', 'images/' + images[index])
-        .attr('width', 100)
-        .attr('height', 100)
+        .attr('width', width)
+        .attr('height', height)
         .attr('clip-path', 'url(#clip)')
-        .attr('x', 50)
-        .attr('y', 50);
+        .attr('x', x)
+        .attr('y', y);
 }
 
 /**
@@ -190,6 +192,7 @@ function appendAreaInfo(areaName, x, y) {
   var people = areaData.people;
   var priority = areaData.priority;
 
+  var originX = x;
   var originY = y;
 
   appendText(areaName, x, originY);
@@ -199,7 +202,7 @@ function appendAreaInfo(areaName, x, y) {
   appendText("避難人数 : 100", x, originY);
   originY += 25;
   appendText("必要物資", x, originY);
-  originY += 25;
+  originY += 30;
 
   var resourceCount = 0;
   for (var i in resources) {
@@ -208,9 +211,16 @@ function appendAreaInfo(areaName, x, y) {
       var name = resource.name;
 
       if (quantity > 0) {
-          var resourceInfo = "　 　" + name + " ✕ " + quantity;
-          appendText(resourceInfo, x, originY);
-          originY += 25;
+          var resourceInfo = "　 　　" + " ✕ " + quantity;
+          appendText(resourceInfo, originX, originY);
+          var index = iconIndexFromName(name);
+          displayIcon(index, originX, originY - 25, 50, 50);
+          if (resourceCount % 2 == 0) {
+              originX += 200;
+          } else {
+              originX = x;
+              originY += 50;
+          }
           resourceCount++;
       }
   }
@@ -297,4 +307,19 @@ function displayGraph() {
     target.style.position="relative";
     target.style.top="-" + size.width + "px";
     target.style.left=(size.height * 9 / 4) + "px";
+}
+
+function iconIndexFromName(name) {
+  if (name == "おにぎり") {
+      return 3;
+  } else if (name == "水") {
+      return 8;
+  } else if (name == "おむつ") {
+      return 0;
+  } else if (name == "タオル") {
+      return 6;
+  } else if (name == "ティッシュ") {
+      return 5;
+  }
+  return -1;
 }
