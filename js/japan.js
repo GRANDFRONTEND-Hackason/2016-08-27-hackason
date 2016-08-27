@@ -1,5 +1,20 @@
+
+var jsonData = [];
+
 displayMap();
 displayIcon(2);
+
+var xhr = new XMLHttpRequest;
+xhr.open('GET', 'json/data.json', true);
+xhr.send(null);
+xhr.onreadystatechange = function() {
+    if( this.readyState == 4 && this.status == 200 ) {
+        if( this.response ) {
+            jsonData = this.response;
+            console.log(jsonData);
+        }
+    }
+}
 
 // 日本地図の描画
 function displayMap() {
@@ -67,17 +82,4 @@ function displayIcon(index) {
         .attr('clip-path', 'url(#clip)')
         .attr('x', 50)
         .attr('y', 50);
-    
 }
-
-// 画面リサイズ時の再描画
-var timer = false;
-window.addEventListener("resize", function(){
-    if(timer !== false){
-        clearTimeout(timer);
-    }
-    timer = setTimeout(function(){
-        displayMap();
-        displayIcon(2);
-    }, 10);
-});
