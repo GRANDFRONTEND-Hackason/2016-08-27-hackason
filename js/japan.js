@@ -147,7 +147,7 @@ function getAreaColor(areaName) {
 }
 
 // アイコンの取得
-function displayIcon(index) {
+function displayIcon(index, x, y, width, height) {
 
     var images = [
         'diaper_c.png',
@@ -164,11 +164,11 @@ function displayIcon(index) {
     var icon = d3.select("svg")
         .append('image')
         .attr('xlink:href', 'images/' + images[index])
-        .attr('width', 100)
-        .attr('height', 100)
+        .attr('width', width)
+        .attr('height', height)
         .attr('clip-path', 'url(#clip)')
-        .attr('x', 50)
-        .attr('y', 50);
+        .attr('x', x)
+        .attr('y', y);
 }
 
 /**
