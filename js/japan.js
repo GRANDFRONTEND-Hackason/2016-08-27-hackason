@@ -3,14 +3,16 @@ var jsonData;
 var bgColor = "#0E1925";
 var defaultColor = "#e5e5e5";
 var colors = [
-    "#e5e5e5",
-    "#303a97",
-    "#1fb8ec",
-    "#8fe934",
-    "#fffd38",
-    "#e3542a",
-    "#df0829"
+    "#ffffff",
+    "#ffebee",
+    "#ffcdd2",
+    "#ef9a9a",
+    "#ef5350",
+    "#e53935",
+    "#b71c1c"
 ];
+
+d3.select("body").style("background-color", bgColor);
 
 var xhr = new XMLHttpRequest;
 xhr.open('GET', 'json/data.json', true);
@@ -37,8 +39,7 @@ function displayMap() {
     var svg = d3.select("body")
         .append("svg")
         .attr("width", w)
-        .attr("height", h)
-        .style("background-color", bgColor);
+        .attr("height", h);
 
     // 日本地図データ読み込み
     d3.json("../json/japan.topojson", function(json) {
@@ -66,6 +67,10 @@ function displayMap() {
             return getAreaColor(e.properties.name_local);
         })
         .on("mouseover", function(e) {
+
+            // 重ね順を最前に
+            this.parentNode.appendChild(this);
+
             d3.select(this)
             .transition()
             .duration(100).ease('linear')
@@ -87,13 +92,16 @@ function displayMap() {
                     }
                 }
             }
-            
+
             svg.append("rect")
             .attr("x",30)
             .attr("y",h - 300)
-            .attr("width",600)
+            .attr("width",500)
             .attr("height",260)
-            .attr("fill","gray");
+            .attr("fill","white")
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .attr("opacity",0.8);
             
             svg.append("text")
             .html(e.properties.name_local)
@@ -101,7 +109,9 @@ function displayMap() {
             .attr('height', 50)
             .attr('x', 40)
             .attr('y', h - 270);
-            
+
+            appendAreaInfo(e.properties.name_local, 40, h - 270);
+
         })
         .on("mouseout", function(e) {
             svg.select("rect").remove();
@@ -114,6 +124,15 @@ function displayMap() {
             .attr("transform","translate(0,4)");
         });
     });
+
+    var icon = d3.select("svg")
+        .append('image')
+        .attr('xlink:href', 'images/jiku.png')
+        .attr('width', 45)
+        .attr('height', 350)
+        .attr('clip-path', 'url(#clip)')
+        .attr('x', 40)
+        .attr('y', 20);
 
 }
 
@@ -164,42 +183,54 @@ function getAreaData(areaName) {
   }
 }
 
-function appendAreaInfo(areaName) {
+function appendAreaInfo(areaName, x, y) {
   var areaData = getAreaData(areaName);
   var areaName = areaData.areaName;
   var resources = areaData.resources;
   var people = areaData.people;
+  var priority = areaData.priority;
 
-  var resourcesInfo = "";
+  var originY = y;
+
+  appendText(areaName, x, originY);
+  originY += 25;
+  appendText("優先順位 : " +  priority, x, originY);
+  originY += 25;
+  appendText("避難人数 : 100", x, originY);
+  originY += 25;
+  appendText("必要物資", x, originY);
+  originY += 25;
+
+  var resourceCount = 0;
   for (var i in resources) {
       var resource = resources[i];
-      var quantity = resource.quantity
-      var name = resource.name
+      var quantity = resource.quantity;
+      var name = resource.name;
 
       if (quantity > 0) {
-          resourcesInfo += name + " ✕ " + quantity + ", ";
+          var resourceInfo = "　 　" + name + " ✕ " + quantity;
+          appendText(resourceInfo, x, originY);
+          originY += 25;
+          resourceCount++;
       }
   }
 
-  if (resourcesInfo.length == 0) {
-    resourcesInfo = "なし"
-  } else {
-    resourcesInfo = resourcesInfo.substr(0, resourcesInfo.length - 2);
+  if (resourceCount == 0) {
+      var resourceInfo = "　　なし";
+      appendText(resourceInfo, x, originY);
+      originY += 25;
   }
 
-  appendText(areaName, 0);
-  appendText("必要物資：" + resourcesInfo, 20)
-  appendText("避難人数 : 100", 40)
 }
 
-function appendText(text, originY) {
+function appendText(text, x, y) {
   var svg = d3.select("svg");
   svg.append("text")
   .html(text)
   .attr('width', 100)
   .attr('height', 100)
-  .attr('x', 200)
-  .attr('y', 200 + originY);
+  .attr('x', x)
+  .attr('y', y);
 }
 
 // 円グラフ表示
