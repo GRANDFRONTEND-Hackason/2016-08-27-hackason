@@ -2,3 +2,8 @@ html, body{
 	height: 100%;
 	width: 100%;
 }
+
+#chart{
+	height: 400px;
+	width: 400px;
+}

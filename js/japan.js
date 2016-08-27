@@ -1,5 +1,6 @@
 var jsonData;
 
+var bgColor = "#0E1925";
 var defaultColor = "#e5e5e5";
 var colors = [
     "#e5e5e5",
@@ -20,6 +21,7 @@ xhr.onreadystatechange = function() {
             var res = this.response;
             jsonData = JSON.parse(res);
             displayMap();
+            displayGraph();
         }
     }
 }
@@ -35,7 +37,8 @@ function displayMap() {
     var svg = d3.select("body")
         .append("svg")
         .attr("width", w)
-        .attr("height", h);
+        .attr("height", h)
+        .style("background-color", bgColor);
 
     // 日本地図データ読み込み
     d3.json("../json/japan.topojson", function(json) {
@@ -57,7 +60,7 @@ function displayMap() {
         .enter()
         .append("path")
         .attr("d", path)
-        .attr("stroke", "black")
+        .attr("stroke", bgColor)
         .attr("stroke-width", 0.5)
         .style("fill", function(e, i) {
             return getAreaColor(e.properties.name_local);
@@ -66,8 +69,8 @@ function displayMap() {
             d3.select(this)
             .transition()
             .duration(100).ease('linear')
-            .attr("opacity",0.7)
-            .attr("transform","translate(0,-4)");            
+            .attr("opacity",1.0)
+            .attr("transform","translate(0,-4)");
 
             for (var index in jsonData) {
                 var areaData = jsonData[index];
@@ -128,15 +131,15 @@ function getAreaColor(areaName) {
 function displayIcon(index) {
 
     var images = [
-        'diaper.png',
-        'list.png',
-        'location.png',
-        'onigiri.png',
-        'priority.png',
-        'tissue.png',
-        'towel.png',
-        'volume.png',
-        'water.png'
+        'diaper_c.png',
+        'list_c.png',
+        'location_c.png',
+        'onigiri_c.png',
+        'priority_c.png',
+        'tissue_c.png',
+        'towel_c.png',
+        'volume_c.png',
+        'water_c.png'
     ];
 
     var icon = d3.select("svg")
@@ -197,4 +200,59 @@ function appendText(text, originY) {
   .attr('height', 100)
   .attr('x', 200)
   .attr('y', 200 + originY);
+}
+
+// 円グラフ表示
+function displayGraph() {
+    // 表示サイズを設定
+    var size = {
+      width: 400,
+      height:400
+    };
+
+    // 円グラフの表示データ
+    var data = [
+        {legend:"おにぎり", value:40, color:"#e74c3c"},
+        {legend:"水", value:10, color:"#f39c12"},
+        {legend:"おむつ", value:15, color:"#16a085"},
+        {legend:"ティッシュ", value:25, color:"#d35400"},
+        {legend:"タオル", value:30, color:"#2c3e50"}
+    ];
+
+    // SVG要素生成
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("id", "chart");
+
+    // d3用の変数
+    var svg = d3.select("#chart"),
+        pie = d3.layout.pie().sort(null).value(function(d){ return d.value; }),
+        arc = d3.svg.arc().innerRadius(0).outerRadius(size.width / 2);
+
+    // グループの作成
+    var g = svg.selectAll(".arc")
+        .data(pie(data))
+        .enter()
+        .append("g")
+        .attr("transform", "translate(" + (size.width / 2) + "," + (size.width / 2) + ")")
+        .attr("class", "arc");
+
+    // 円弧の作成
+    g.append("path")
+        .attr("d", arc)
+        .attr("stroke", "white")
+        .attr("fill", function(d){console.log(arc.centroid(d)); return d.data.color; });
+
+    // データの表示
+    var maxValue = d3.max(data,function(d){ return d.value; });
+
+    // データの表示
+    g.append("text")
+        .attr("dy", ".35em")
+        .attr("font-size", function(d){ return d.value / maxValue * 20; })
+        .style("text-anchor", "middle")
+        .text(function(d){ return d.data.legend; });
+
+    // テキストの位置を再調整
+    g.selectAll("text").attr("transform", function(d){ return "translate(" + arc.centroid(d) + ")"; });
 }
