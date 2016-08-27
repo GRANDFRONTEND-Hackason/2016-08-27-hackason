@@ -90,9 +90,16 @@ function displayMap() {
                     }
                 }
             }
+            svg.append("text")
+            .html(e.properties.name_local)
+            .attr('width', 100)
+            .attr('height', 100)
+            .attr('x', 200)
+            .attr('y', 200);
         })
         .on("mouseout", function(e) {
 
+            svg.select("text").remove();
             d3.select(this)
             .transition()
             .duration(100).ease('linear')
