@@ -191,7 +191,7 @@ function appendAreaInfo(areaName, x, y) {
   var originY = y;
 
   originY += 10;
-  appendText("　　 " + areaName, originX, originY);
+  appendText("　　　" + areaName, originX, originY);
   displayIcon(2, originX, originY - 25, 40, 40);
   originX += 150;
   appendText("　　　緊急度 : " +  (priority - 1), originX, originY);
