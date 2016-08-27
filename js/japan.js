@@ -36,7 +36,10 @@ function displayMap() {
         .attr("d", path)
         .attr("stroke", "black")
         .attr("stroke-width", 0.5)
-        .style("fill", "#90ee90"); 
+        .style("fill", "#90ee90")
+        .on("mouseover", function(e) {
+          console.log(e.properties.name_local);
+        });
     });
 
 }
