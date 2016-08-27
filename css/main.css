@@ -5,10 +5,4 @@ html, body{
 	padding: 0;
 }
 
-#chart{
-	height: 400px;
-	width: 400px;
-	position:relative;
-	top:-420px;
-	left:900px;
-}
+
