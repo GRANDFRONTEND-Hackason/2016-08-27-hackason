@@ -90,17 +90,17 @@ function displayMap() {
             
             svg.append("rect")
             .attr("x",30)
-            .attr("y",700)
+            .attr("y",h - 300)
             .attr("width",600)
-            .attr("height",240)
+            .attr("height",260)
             .attr("fill","gray");
             
             svg.append("text")
             .html(e.properties.name_local)
-            .attr('width', 100)
-            .attr('height', 100)
-            .attr('x', 50)
-            .attr('y', 750);
+            .attr('width', 50)
+            .attr('height', 50)
+            .attr('x', 40)
+            .attr('y', h - 270);
             
         })
         .on("mouseout", function(e) {
