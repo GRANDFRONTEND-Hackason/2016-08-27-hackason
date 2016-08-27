@@ -1,5 +1,6 @@
 displayMap();
 displayIcon(2);
+displayGraph();
 
 // 日本地図の描画
 function displayMap() {
@@ -67,6 +68,60 @@ function displayIcon(index) {
         .attr('y', 50);
 }
 
+// 円グラフ表示
+function displayGraph() {
+    // 表示サイズを設定
+    var size = {
+      width: 400,
+      height:400
+    };
+
+    // 円グラフの表示データ
+    var data = [
+        {legend:"おにぎり", value:40, color:"#e74c3c"},
+        {legend:"水", value:10, color:"#f39c12"},
+        {legend:"おむつ", value:15, color:"#16a085"},
+        {legend:"ティッシュ", value:25, color:"#d35400"},
+        {legend:"タオル", value:30, color:"#2c3e50"}
+    ];
+
+    // SVG要素生成
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("id", "chart");
+
+    // d3用の変数
+    var svg = d3.select("#chart"),
+        pie = d3.layout.pie().sort(null).value(function(d){ return d.value; }),
+        arc = d3.svg.arc().innerRadius(0).outerRadius(size.width / 2);
+
+    // グループの作成
+    var g = svg.selectAll(".arc")
+        .data(pie(data))
+        .enter()
+        .append("g")
+        .attr("transform", "translate(" + (size.width / 2) + "," + (size.width / 2) + ")")
+        .attr("class", "arc");
+
+    // 円弧の作成
+    g.append("path")
+        .attr("d", arc)
+        .attr("stroke", "white")
+        .attr("fill", function(d){console.log(arc.centroid(d)); return d.data.color; });
+
+    // データの表示
+    var maxValue = d3.max(data,function(d){ return d.value; });
+
+    // データの表示
+    g.append("text")
+        .attr("dy", ".35em")
+        .attr("font-size", function(d){ return d.value / maxValue * 20; })
+        .style("text-anchor", "middle")
+        .text(function(d){ return d.data.legend; });
+
+    // テキストの位置を再調整
+    g.selectAll("text").attr("transform", function(d){ return "translate(" + arc.centroid(d) + ")"; });
+}
 
 // 画面リサイズ時の再描画
 var timer = false;
