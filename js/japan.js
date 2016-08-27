@@ -67,6 +67,10 @@ function displayMap() {
             return getAreaColor(e.properties.name_local);
         })
         .on("mouseover", function(e) {
+
+            // 重ね順を最前に
+            this.parentNode.appendChild(this);
+
             d3.select(this)
             .transition()
             .duration(100).ease('linear')
@@ -92,9 +96,12 @@ function displayMap() {
             svg.append("rect")
             .attr("x",30)
             .attr("y",h - 300)
-            .attr("width",600)
+            .attr("width",500)
             .attr("height",260)
-            .attr("fill","gray");
+            .attr("fill","white")
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .attr("opacity",0.8);
             
             svg.append("text")
             .html(e.properties.name_local)
