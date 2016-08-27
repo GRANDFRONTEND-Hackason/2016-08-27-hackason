@@ -1,5 +1,20 @@
+
+var jsonData = [];
+
 displayMap();
 displayIcon(2);
+
+var xhr = new XMLHttpRequest;
+xhr.open('GET', 'json/data.json', true);
+xhr.send(null);
+xhr.onreadystatechange = function() {
+    if( this.readyState == 4 && this.status == 200 ) {
+        if( this.response ) {
+            jsonData = this.response;
+            console.log(jsonData);
+        }
+    }
+}
 
 // 日本地図の描画
 function displayMap() {
@@ -48,37 +63,23 @@ function displayMap() {
 function displayIcon(index) {
 
     var images = [
-        'https://assets-cdn.github.com/images/modules/open_graph/github-octocat.png',
-        'http://jsrun.it/assets/t/9/p/m/t9pm6.jpg',
-        'http://jsrun.it/assets/1/E/m/P/1EmPa.jpg',
-        'http://jsrun.it/assets/z/m/t/G/zmtGr.jpg',
-        'http://jsrun.it/assets/j/m/K/P/jmKP9.jpg',
-        'http://jsrun.it/assets/s/R/9/y/sR9yF.jpg',
-        'http://jsrun.it/assets/g/G/C/m/gGCmv.jpg',
-        'http://jsrun.it/assets/4/K/T/B/4KTBL.jpg',
-        'http://jsrun.it/assets/l/f/V/0/lfV0z.jpg',
-        'http://jsrun.it/assets/h/g/0/5/hg05Z.jpg'
+        'diaper.png',
+        'list.png',
+        'location.png',
+        'onigiri.png',
+        'priority.png',
+        'tissue.png',
+        'towel.png',
+        'volume.png',
+        'water.png'
     ];
 
-    var images = d3.select("svg")
+    var icon = d3.select("svg")
         .append('image')
-        .attr('xlink:href', images[index])
+        .attr('xlink:href', 'images/' + images[index])
         .attr('width', 100)
         .attr('height', 100)
         .attr('clip-path', 'url(#clip)')
         .attr('x', 50)
         .attr('y', 50);
 }
-
-
-// 画面リサイズ時の再描画
-var timer = false;
-window.addEventListener("resize", function(){
-    if(timer !== false){
-        clearTimeout(timer);
-    }
-    timer = setTimeout(function(){
-        displayMap();
-        displayIcon(2);
-    }, 10);
-});
