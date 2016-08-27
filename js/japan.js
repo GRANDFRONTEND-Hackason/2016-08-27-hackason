@@ -153,7 +153,8 @@ function displayIcon(index, x, y, width, height) {
         'towel_c.png',
         'volume_c.png',
         'water_c.png',
-        'ningen.png'
+        'ningen.png',
+        'kinkyu.png'
     ];
 
     var icon = d3.select("svg")
@@ -194,7 +195,7 @@ function appendAreaInfo(areaName, x, y) {
   displayIcon(2, originX, originY - 25, 40, 40);
   originX += 150;
   appendText("　　　緊急度 : " +  (priority - 1), originX, originY);
-  displayIcon(4, originX, originY - 30, 50, 50);
+  displayIcon(10, originX, originY - 30, 40, 40);
   originX += 150;
   appendText("　　　避難人数 : 100", originX, originY);
   displayIcon(9, originX, originY - 30, 40, 40);
