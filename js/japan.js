@@ -1,5 +1,3 @@
-displayMap();
-displayIcon(2);
 displayGraph();
 var jsonData;
 
@@ -206,15 +204,3 @@ function displayGraph() {
     // テキストの位置を再調整
     g.selectAll("text").attr("transform", function(d){ return "translate(" + arc.centroid(d) + ")"; });
 }
-
-// 画面リサイズ時の再描画
-var timer = false;
-window.addEventListener("resize", function(){
-    if(timer !== false){
-        clearTimeout(timer);
-    }
-    timer = setTimeout(function(){
-        displayMap();
-        displayIcon(2);
-    }, 10);
-});
