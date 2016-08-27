@@ -24,7 +24,7 @@
       "5" : {
         "name" : "ティッシュ",
         "quantity" : 20
-      },
+      }
     },
     "people" : 100,
     "priority" : 1
@@ -54,7 +54,7 @@
       "5" : {
         "name" : "ティッシュ",
         "quantity" : 20
-      },
+      }
     },
     "people" : 150,
     "priority" : 2
@@ -84,7 +84,7 @@
       "5" : {
         "name" : "ティッシュ",
         "quantity" : 20
-      },
+      }
     },
     "people" : 130,
     "priority" : 3
@@ -114,7 +114,7 @@
       "5" : {
         "name" : "ティッシュ",
         "quantity" : 20
-      },
+      }
     },
     "people" : 120,
     "priority" : 4
@@ -144,7 +144,7 @@
       "5" : {
         "name" : "ティッシュ",
         "quantity" : 20
-      },
+      }
     },
     "people" : 120,
     "priority" : 5
@@ -174,7 +174,7 @@
       "5" : {
         "name" : "ティッシュ",
         "quantity" : 20
-      },
+      }
     },
     "people" : 120,
     "priority" : 6
@@ -204,7 +204,7 @@
       "5" : {
         "name" : "ティッシュ",
         "quantity" : 20
-      },
+      }
     },
     "people" : 120,
     "priority" : 7
