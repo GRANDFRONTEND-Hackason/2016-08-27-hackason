@@ -84,16 +84,26 @@ function displayMap() {
                     }
                 }
             }
+            
+            svg.append("rect")
+            .attr("x",30)
+            .attr("y",700)
+            .attr("width",600)
+            .attr("height",240)
+            .attr("fill","gray");
+            
             svg.append("text")
             .html(e.properties.name_local)
             .attr('width', 100)
             .attr('height', 100)
-            .attr('x', 200)
-            .attr('y', 200);
+            .attr('x', 50)
+            .attr('y', 750);
+            
         })
         .on("mouseout", function(e) {
             svg.select("text").remove();
-
+            svg.select("rect").remove();
+            
             d3.select(this)
             .transition()
             .duration(100).ease('linear')
