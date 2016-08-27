@@ -12,6 +12,8 @@ var colors = [
     "#df0829"
 ];
 
+d3.select("body").style("background-color", bgColor);
+
 var xhr = new XMLHttpRequest;
 xhr.open('GET', 'json/data.json', true);
 xhr.send(null);
@@ -37,8 +39,7 @@ function displayMap() {
     var svg = d3.select("body")
         .append("svg")
         .attr("width", w)
-        .attr("height", h)
-        .style("background-color", bgColor);
+        .attr("height", h);
 
     // 日本地図データ読み込み
     d3.json("../json/japan.topojson", function(json) {
@@ -114,6 +115,15 @@ function displayMap() {
             .attr("transform","translate(0,4)");
         });
     });
+
+    var icon = d3.select("svg")
+        .append('image')
+        .attr('xlink:href', 'images/jiku.png')
+        .attr('width', 45)
+        .attr('height', 350)
+        .attr('clip-path', 'url(#clip)')
+        .attr('x', 40)
+        .attr('y', 20);
 
 }
 
