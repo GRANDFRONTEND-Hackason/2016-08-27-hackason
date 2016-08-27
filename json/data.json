@@ -1,0 +1,191 @@
+[
+  {
+    "areaId" : 1,
+    "areaName" : "熊本",
+    "resources" : {
+      "1" : {
+        "name" : "水",
+        "quantity" : 50
+      },
+      "2" : {
+        "name" : "おにぎり",
+        "quantity" : 0
+      },
+      "3" : {
+        "name" : "タオル",
+        "quantity" : 20
+      },
+      "4" : {
+        "name" : "おむつ",
+        "quantity" : 20
+      },
+      "5" : {
+        "name" : "ティッシュ",
+        "quantity" : 20
+      },
+    },
+    "priority" : 1
+  },
+  {
+    "areaId" : 2,
+    "areaName" : "熊本",
+    "resources" : {
+      "1" : {
+        "name" : "水",
+        "quantity" : 50
+      },
+      "2" : {
+        "name" : "おにぎり",
+        "quantity" : 0
+      },
+      "3" : {
+        "name" : "タオル",
+        "quantity" : 20
+      },
+      "4" : {
+        "name" : "おむつ",
+        "quantity" : 20
+      },
+      "5" : {
+        "name" : "ティッシュ",
+        "quantity" : 20
+      },
+    },
+    "priority" : 2
+  },
+  {
+    "areaId" : 3,
+    "areaName" : "熊本",
+    "resources" : {
+      "1" : {
+        "name" : "水",
+        "quantity" : 50
+      },
+      "2" : {
+        "name" : "おにぎり",
+        "quantity" : 0
+      },
+      "3" : {
+        "name" : "タオル",
+        "quantity" : 20
+      },
+      "4" : {
+        "name" : "おむつ",
+        "quantity" : 20
+      },
+      "5" : {
+        "name" : "ティッシュ",
+        "quantity" : 20
+      },
+    },
+    "priority" : 3
+  },
+  {
+    "areaId" : 4,
+    "areaName" : "熊本",
+    "resources" : {
+      "1" : {
+        "name" : "水",
+        "quantity" : 50
+      },
+      "2" : {
+        "name" : "おにぎり",
+        "quantity" : 0
+      },
+      "3" : {
+        "name" : "タオル",
+        "quantity" : 20
+      },
+      "4" : {
+        "name" : "おむつ",
+        "quantity" : 20
+      },
+      "5" : {
+        "name" : "ティッシュ",
+        "quantity" : 20
+      },
+    },
+    "priority" : 4
+  },
+  {
+    "areaId" : 5,
+    "areaName" : "熊本",
+    "resources" : {
+      "1" : {
+        "name" : "水",
+        "quantity" : 50
+      },
+      "2" : {
+        "name" : "おにぎり",
+        "quantity" : 0
+      },
+      "3" : {
+        "name" : "タオル",
+        "quantity" : 20
+      },
+      "4" : {
+        "name" : "おむつ",
+        "quantity" : 20
+      },
+      "5" : {
+        "name" : "ティッシュ",
+        "quantity" : 20
+      },
+    },
+    "priority" : 5
+  },
+  {
+    "areaId" : 6,
+    "areaName" : "熊本",
+    "resources" : {
+      "1" : {
+        "name" : "水",
+        "quantity" : 50
+      },
+      "2" : {
+        "name" : "おにぎり",
+        "quantity" : 0
+      },
+      "3" : {
+        "name" : "タオル",
+        "quantity" : 20
+      },
+      "4" : {
+        "name" : "おむつ",
+        "quantity" : 20
+      },
+      "5" : {
+        "name" : "ティッシュ",
+        "quantity" : 20
+      },
+    },
+    "priority" : 6
+  },
+  {
+    "areaId" : 7,
+    "areaName" : "熊本",
+    "resources" : {
+      "1" : {
+        "name" : "水",
+        "quantity" : 50
+      },
+      "2" : {
+        "name" : "おにぎり",
+        "quantity" : 0
+      },
+      "3" : {
+        "name" : "タオル",
+        "quantity" : 20
+      },
+      "4" : {
+        "name" : "おむつ",
+        "quantity" : 20
+      },
+      "5" : {
+        "name" : "ティッシュ",
+        "quantity" : 20
+      },
+    },
+    "priority" : 7
+  },
+]
