@@ -1,7 +1,9 @@
 [
   {
     "areaId" : 1,
-    "areaName" : "熊本",
+    "areaName" : "福岡",
+    "lat" : "33.60639",
+    "lon" : "130.41806",
     "resources" : {
       "1" : {
         "name" : "水",
@@ -29,7 +31,9 @@
   },
   {
     "areaId" : 2,
-    "areaName" : "熊本",
+    "areaName" : "佐賀",
+    "lat" : "33.24944",
+    "lon" : "130.29889",
     "resources" : {
       "1" : {
         "name" : "水",
@@ -57,7 +61,9 @@
   },
   {
     "areaId" : 3,
-    "areaName" : "熊本",
+    "areaName" : "長崎",
+    "lat" : "32.74472",
+    "lon" : "129.87361",
     "resources" : {
       "1" : {
         "name" : "水",
@@ -86,6 +92,8 @@
   {
     "areaId" : 4,
     "areaName" : "熊本",
+    "lat" : "32.78972",
+    "lon" : "130.74167",
     "resources" : {
       "1" : {
         "name" : "水",
@@ -113,7 +121,9 @@
   },
   {
     "areaId" : 5,
-    "areaName" : "熊本",
+    "areaName" : "大分",
+    "lat" : "33.23806",
+    "lon" : "131.6125",
     "resources" : {
       "1" : {
         "name" : "水",
@@ -141,7 +151,9 @@
   },
   {
     "areaId" : 6,
-    "areaName" : "熊本",
+    "areaName" : "宮崎",
+    "lat" : "31.91111",
+    "lon" : "131.42389",
     "resources" : {
       "1" : {
         "name" : "水",
@@ -169,7 +181,9 @@
   },
   {
     "areaId" : 7,
-    "areaName" : "熊本",
+    "areaName" : "鹿児島",
+    "lat" : "31.56028",
+    "lon" : "130.55806",
     "resources" : {
       "1" : {
         "name" : "水",
