@@ -176,27 +176,37 @@ function appendAreaInfo(areaName, x, y) {
   var people = areaData.people;
   var priority = areaData.priority;
 
-  var resourcesInfo = "";
+  var originY = y;
+
+  appendText(areaName, x, originY);
+  originY += 25;
+  appendText("優先順位 : " +  priority, x, originY);
+  originY += 25;
+  appendText("避難人数 : 100", x, originY);
+  originY += 25;
+  appendText("必要物資", x, originY);
+  originY += 25;
+
+  var resourceCount = 0;
   for (var i in resources) {
       var resource = resources[i];
-      var quantity = resource.quantity
-      var name = resource.name
+      var quantity = resource.quantity;
+      var name = resource.name;
 
       if (quantity > 0) {
-          resourcesInfo += name + " ✕ " + quantity + ", ";
+          var resourceInfo = "　 　" + name + " ✕ " + quantity;
+          appendText(resourceInfo, x, originY);
+          originY += 25;
+          resourceCount++;
       }
   }
 
-  if (resourcesInfo.length == 0) {
-    resourcesInfo = "なし"
-  } else {
-    resourcesInfo = resourcesInfo.substr(0, resourcesInfo.length - 2);
+  if (resourceCount == 0) {
+      var resourceInfo = "　　なし";
+      appendText(resourceInfo, x, originY);
+      originY += 25;
   }
 
-  appendText(areaName, x, y + 0);
-  appendText("必要物資：" + resourcesInfo, x, y + 25);
-  appendText("避難人数 : 100", x, y + 50);
-  appendText("優先順位 : " +  priority, x, y + 75);
 }
 
 function appendText(text, x, y) {
