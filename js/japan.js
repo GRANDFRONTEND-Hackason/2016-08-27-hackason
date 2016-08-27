@@ -305,7 +305,7 @@ function displayGraph() {
     target.style.width=size.width;
     target.style.height=size.height;
     target.style.position="relative";
-    target.style.top="-" + size.width + "px";
+    target.style.top="-" + (size.width * 1.1) + "px";
     target.style.left=(size.height * 9 / 4) + "px";
 }
 
