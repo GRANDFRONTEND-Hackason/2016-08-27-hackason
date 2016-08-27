@@ -193,7 +193,7 @@ function appendAreaInfo(areaName, x, y) {
   appendText("　　 " + areaName, originX, originY);
   displayIcon(2, originX, originY - 25, 40, 40);
   originX += 150;
-  appendText("　　　緊急度 : " +  priority, originX, originY);
+  appendText("　　　緊急度 : " +  (priority - 1), originX, originY);
   displayIcon(4, originX, originY - 30, 50, 50);
   originX += 150;
   appendText("　　　避難人数 : 100", originX, originY);
