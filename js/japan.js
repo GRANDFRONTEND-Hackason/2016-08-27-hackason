@@ -174,6 +174,7 @@ function appendAreaInfo(areaName, x, y) {
   var areaName = areaData.areaName;
   var resources = areaData.resources;
   var people = areaData.people;
+  var priority = areaData.priority;
 
   var resourcesInfo = "";
   for (var i in resources) {
@@ -193,8 +194,9 @@ function appendAreaInfo(areaName, x, y) {
   }
 
   appendText(areaName, x, y + 0);
-  appendText("必要物資：" + resourcesInfo, x, y + 20);
-  appendText("避難人数 : 100", x, y + 40);
+  appendText("必要物資：" + resourcesInfo, x, y + 25);
+  appendText("避難人数 : 100", x, y + 50);
+  appendText("優先順位 : " +  priority, x, y + 75);
 }
 
 function appendText(text, x, y) {
