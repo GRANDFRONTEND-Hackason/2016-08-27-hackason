@@ -24,6 +24,7 @@
         "quantity" : 20
       },
     },
+    "people" : 100,
     "priority" : 1
   },
   {
@@ -51,6 +52,7 @@
         "quantity" : 20
       },
     },
+    "people" : 150,
     "priority" : 2
   },
   {
@@ -78,6 +80,7 @@
         "quantity" : 20
       },
     },
+    "people" : 130,
     "priority" : 3
   },
   {
@@ -105,6 +108,7 @@
         "quantity" : 20
       },
     },
+    "people" : 120,
     "priority" : 4
   },
   {
@@ -132,6 +136,7 @@
         "quantity" : 20
       },
     },
+    "people" : 120,
     "priority" : 5
   },
   {
@@ -159,6 +164,7 @@
         "quantity" : 20
       },
     },
+    "people" : 120,
     "priority" : 6
   },
   {
@@ -186,6 +192,7 @@
         "quantity" : 20
       },
     },
+    "people" : 120,
     "priority" : 7
-  },
+  }
 ]
