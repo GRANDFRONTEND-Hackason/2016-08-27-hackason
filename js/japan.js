@@ -1,4 +1,3 @@
-displayGraph();
 var jsonData;
 
 var defaultColor = "#e5e5e5";
@@ -21,6 +20,7 @@ xhr.onreadystatechange = function() {
             var res = this.response;
             jsonData = JSON.parse(res);
             displayMap();
+            displayGraph();
         }
     }
 }
