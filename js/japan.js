@@ -11,9 +11,6 @@ var colors = [
     "#df0829"
 ];
 
-displayMap();
-displayIcon(2);
-
 var xhr = new XMLHttpRequest;
 xhr.open('GET', 'json/data.json', true);
 xhr.send(null);
@@ -22,6 +19,7 @@ xhr.onreadystatechange = function() {
         if( this.response ) {
             var res = this.response;
             jsonData = JSON.parse(res);
+            displayMap();
         }
     }
 }
@@ -62,13 +60,9 @@ function displayMap() {
         .attr("stroke", "black")
         .attr("stroke-width", 0.5)
         .style("fill", function(e, i) {
-          return getAreaColor(e.properties.name_local);
+            return getAreaColor(e.properties.name_local);
         })
         .on("mouseover", function(e) {
-
-            // d3.select(this)
-            // .style("fill", "white");
-
             d3.select(this)
             .transition()
             .duration(100).ease('linear')
@@ -92,12 +86,11 @@ function displayMap() {
             }
         })
         .on("mouseout", function(e) {
-
             d3.select(this)
             .transition()
             .duration(100).ease('linear')
             .attr("opacity",1.0)
-            .attr("transform","translate(0,4)");  
+            .attr("transform","translate(0,4)");
         });
     });
 
@@ -107,8 +100,6 @@ function getAreaColor(areaName) {
     for (var index in jsonData) {
         var areaData = jsonData[index];
         if (areaData.areaName == areaName) {
-            console.log(areaData.areaName);
-            console.log(areaData.priority);
             return colors[areaData.priority - 1];
         }
     }
