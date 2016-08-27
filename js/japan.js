@@ -159,7 +159,8 @@ function displayIcon(index, x, y, width, height) {
         'tissue_c.png',
         'towel_c.png',
         'volume_c.png',
-        'water_c.png'
+        'water_c.png',
+        'ningen.png'
     ];
 
     var icon = d3.select("svg")
