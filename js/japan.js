@@ -92,7 +92,7 @@ function displayMap() {
                     }
                 }
             }
-            
+
             svg.append("rect")
             .attr("x",30)
             .attr("y",h - 300)
@@ -109,7 +109,9 @@ function displayMap() {
             .attr('height', 50)
             .attr('x', 40)
             .attr('y', h - 270);
-            
+
+            appendAreaInfo(e.properties.name_local, 40, h - 270);
+
         })
         .on("mouseout", function(e) {
             svg.select("rect").remove();
@@ -181,42 +183,54 @@ function getAreaData(areaName) {
   }
 }
 
-function appendAreaInfo(areaName) {
+function appendAreaInfo(areaName, x, y) {
   var areaData = getAreaData(areaName);
   var areaName = areaData.areaName;
   var resources = areaData.resources;
   var people = areaData.people;
+  var priority = areaData.priority;
 
-  var resourcesInfo = "";
+  var originY = y;
+
+  appendText(areaName, x, originY);
+  originY += 25;
+  appendText("優先順位 : " +  priority, x, originY);
+  originY += 25;
+  appendText("避難人数 : 100", x, originY);
+  originY += 25;
+  appendText("必要物資", x, originY);
+  originY += 25;
+
+  var resourceCount = 0;
   for (var i in resources) {
       var resource = resources[i];
-      var quantity = resource.quantity
-      var name = resource.name
+      var quantity = resource.quantity;
+      var name = resource.name;
 
       if (quantity > 0) {
-          resourcesInfo += name + " ✕ " + quantity + ", ";
+          var resourceInfo = "　 　" + name + " ✕ " + quantity;
+          appendText(resourceInfo, x, originY);
+          originY += 25;
+          resourceCount++;
       }
   }
 
-  if (resourcesInfo.length == 0) {
-    resourcesInfo = "なし"
-  } else {
-    resourcesInfo = resourcesInfo.substr(0, resourcesInfo.length - 2);
+  if (resourceCount == 0) {
+      var resourceInfo = "　　なし";
+      appendText(resourceInfo, x, originY);
+      originY += 25;
   }
 
-  appendText(areaName, 0);
-  appendText("必要物資：" + resourcesInfo, 20)
-  appendText("避難人数 : 100", 40)
 }
 
-function appendText(text, originY) {
+function appendText(text, x, y) {
   var svg = d3.select("svg");
   svg.append("text")
   .html(text)
   .attr('width', 100)
   .attr('height', 100)
-  .attr('x', 200)
-  .attr('y', 200 + originY);
+  .attr('x', x)
+  .attr('y', y);
 }
 
 // 円グラフ表示
