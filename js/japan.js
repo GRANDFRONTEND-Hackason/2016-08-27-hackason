@@ -87,21 +87,16 @@ function displayMap() {
                     }
                 }
             }
-            
+
             svg.append("rect")
             .attr("x",30)
             .attr("y",h - 300)
             .attr("width",600)
             .attr("height",260)
             .attr("fill","gray");
-            
-            svg.append("text")
-            .html(e.properties.name_local)
-            .attr('width', 50)
-            .attr('height', 50)
-            .attr('x', 40)
-            .attr('y', h - 270);
-            
+
+            appendAreaInfo(e.properties.name_local, 40, h - 270);
+
         })
         .on("mouseout", function(e) {
             svg.select("rect").remove();
@@ -164,7 +159,7 @@ function getAreaData(areaName) {
   }
 }
 
-function appendAreaInfo(areaName) {
+function appendAreaInfo(areaName, x, y) {
   var areaData = getAreaData(areaName);
   var areaName = areaData.areaName;
   var resources = areaData.resources;
@@ -187,19 +182,19 @@ function appendAreaInfo(areaName) {
     resourcesInfo = resourcesInfo.substr(0, resourcesInfo.length - 2);
   }
 
-  appendText(areaName, 0);
-  appendText("必要物資：" + resourcesInfo, 20)
-  appendText("避難人数 : 100", 40)
+  appendText(areaName, x, y + 0);
+  appendText("必要物資：" + resourcesInfo, x, y + 20);
+  appendText("避難人数 : 100", x, y + 40);
 }
 
-function appendText(text, originY) {
+function appendText(text, x, y) {
   var svg = d3.select("svg");
   svg.append("text")
   .html(text)
   .attr('width', 100)
   .attr('height', 100)
-  .attr('x', 200)
-  .attr('y', 200 + originY);
+  .attr('x', x)
+  .attr('y', y);
 }
 
 // 円グラフ表示
