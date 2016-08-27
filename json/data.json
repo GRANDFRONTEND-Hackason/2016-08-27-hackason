@@ -1,7 +1,7 @@
 [
   {
     "areaId" : 1,
-    "areaName" : "福岡",
+    "areaName" : "福岡県",
     "lat" : "33.60639",
     "lon" : "130.41806",
     "resources" : {
@@ -31,7 +31,7 @@
   },
   {
     "areaId" : 2,
-    "areaName" : "佐賀",
+    "areaName" : "佐賀県",
     "lat" : "33.24944",
     "lon" : "130.29889",
     "resources" : {
@@ -61,7 +61,7 @@
   },
   {
     "areaId" : 3,
-    "areaName" : "長崎",
+    "areaName" : "長崎県",
     "lat" : "32.74472",
     "lon" : "129.87361",
     "resources" : {
@@ -91,7 +91,7 @@
   },
   {
     "areaId" : 4,
-    "areaName" : "熊本",
+    "areaName" : "熊本県",
     "lat" : "32.78972",
     "lon" : "130.74167",
     "resources" : {
@@ -121,7 +121,7 @@
   },
   {
     "areaId" : 5,
-    "areaName" : "大分",
+    "areaName" : "大分県",
     "lat" : "33.23806",
     "lon" : "131.6125",
     "resources" : {
@@ -151,7 +151,7 @@
   },
   {
     "areaId" : 6,
-    "areaName" : "宮崎",
+    "areaName" : "宮崎県",
     "lat" : "31.91111",
     "lon" : "131.42389",
     "resources" : {
@@ -181,7 +181,7 @@
   },
   {
     "areaId" : 7,
-    "areaName" : "鹿児島",
+    "areaName" : "鹿児島県",
     "lat" : "31.56028",
     "lon" : "130.55806",
     "resources" : {
