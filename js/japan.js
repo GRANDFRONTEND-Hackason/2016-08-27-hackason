@@ -245,10 +245,13 @@ function appendText(text, x, y) {
 
 // 円グラフ表示
 function displayGraph() {
+    var w = d3.select("body").node().getBoundingClientRect().width;
+    var h = d3.select("body").node().getBoundingClientRect().height;
+
     // 表示サイズを設定
     var size = {
-      width: 400,
-      height:400
+      width: (w/3.4),
+      height:(w/3.4)
     };
 
     // 円グラフの表示データ
@@ -282,7 +285,7 @@ function displayGraph() {
     g.append("path")
         .attr("d", arc)
         .attr("stroke", "white")
-        .attr("fill", function(d){console.log(arc.centroid(d)); return d.data.color; });
+        .attr("fill", function(d){ return d.data.color; });
 
     // データの表示
     var maxValue = d3.max(data,function(d){ return d.value; });
@@ -296,6 +299,14 @@ function displayGraph() {
 
     // テキストの位置を再調整
     g.selectAll("text").attr("transform", function(d){ return "translate(" + arc.centroid(d) + ")"; });
+
+    // 描画位置調整
+    var target = document.getElementById("chart");
+    target.style.width=size.width;
+    target.style.height=size.height;
+    target.style.position="relative";
+    target.style.top="-" + size.width + "px";
+    target.style.left=(size.height * 9 / 4) + "px";
 }
 
 function iconIndexFromName(name) {
