@@ -101,9 +101,9 @@ function displayMap() {
             
         })
         .on("mouseout", function(e) {
-            svg.select("text").remove();
             svg.select("rect").remove();
-            
+            svg.selectAll("text").remove();
+
             d3.select(this)
             .transition()
             .duration(100).ease('linear')
@@ -147,4 +147,54 @@ function displayIcon(index) {
         .attr('clip-path', 'url(#clip)')
         .attr('x', 50)
         .attr('y', 50);
+}
+
+/**
+ * 県名から県のデータを取得
+ */
+function getAreaData(areaName) {
+  for (var i in jsonData) {
+    var areaData = jsonData[i]
+    if (areaData.areaName == areaName) {
+      return areaData;
+    }
+  }
+}
+
+function appendAreaInfo(areaName) {
+  var areaData = getAreaData(areaName);
+  var areaName = areaData.areaName;
+  var resources = areaData.resources;
+  var people = areaData.people;
+
+  var resourcesInfo = "";
+  for (var i in resources) {
+      var resource = resources[i];
+      var quantity = resource.quantity
+      var name = resource.name
+
+      if (quantity > 0) {
+          resourcesInfo += name + " ✕ " + quantity + ", ";
+      }
+  }
+
+  if (resourcesInfo.length == 0) {
+    resourcesInfo = "なし"
+  } else {
+    resourcesInfo = resourcesInfo.substr(0, resourcesInfo.length - 2);
+  }
+
+  appendText(areaName, 0);
+  appendText("必要物資：" + resourcesInfo, 20)
+  appendText("避難人数 : 100", 40)
+}
+
+function appendText(text, originY) {
+  var svg = d3.select("svg");
+  svg.append("text")
+  .html(text)
+  .attr('width', 100)
+  .attr('height', 100)
+  .attr('x', 200)
+  .attr('y', 200 + originY);
 }
