@@ -1,5 +1,6 @@
 var jsonData;
 
+var bgColor = "#0E1925";
 var defaultColor = "#e5e5e5";
 var colors = [
     "#e5e5e5",
@@ -36,7 +37,8 @@ function displayMap() {
     var svg = d3.select("body")
         .append("svg")
         .attr("width", w)
-        .attr("height", h);
+        .attr("height", h)
+        .style("background-color", bgColor);
 
     // 日本地図データ読み込み
     d3.json("../json/japan.topojson", function(json) {
@@ -58,7 +60,7 @@ function displayMap() {
         .enter()
         .append("path")
         .attr("d", path)
-        .attr("stroke", "black")
+        .attr("stroke", bgColor)
         .attr("stroke-width", 0.5)
         .style("fill", function(e, i) {
             return getAreaColor(e.properties.name_local);
@@ -67,8 +69,8 @@ function displayMap() {
             d3.select(this)
             .transition()
             .duration(100).ease('linear')
-            .attr("opacity",0.7)
-            .attr("transform","translate(0,-4)");            
+            .attr("opacity",1.0)
+            .attr("transform","translate(0,-4)");
 
             for (var index in jsonData) {
                 var areaData = jsonData[index];
@@ -129,15 +131,15 @@ function getAreaColor(areaName) {
 function displayIcon(index) {
 
     var images = [
-        'diaper.png',
-        'list.png',
-        'location.png',
-        'onigiri.png',
-        'priority.png',
-        'tissue.png',
-        'towel.png',
-        'volume.png',
-        'water.png'
+        'diaper_c.png',
+        'list_c.png',
+        'location_c.png',
+        'onigiri_c.png',
+        'priority_c.png',
+        'tissue_c.png',
+        'towel_c.png',
+        'volume_c.png',
+        'water_c.png'
     ];
 
     var icon = d3.select("svg")
