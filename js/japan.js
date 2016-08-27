@@ -3,13 +3,13 @@ var jsonData;
 var bgColor = "#0E1925";
 var defaultColor = "#e5e5e5";
 var colors = [
-    "#e5e5e5",
-    "#303a97",
-    "#1fb8ec",
-    "#8fe934",
-    "#fffd38",
-    "#e3542a",
-    "#df0829"
+    "#ffffff",
+    "#ffebee",
+    "#ffcdd2",
+    "#ef9a9a",
+    "#ef5350",
+    "#e53935",
+    "#b71c1c"
 ];
 
 d3.select("body").style("background-color", bgColor);
