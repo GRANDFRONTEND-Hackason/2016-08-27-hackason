@@ -11,23 +11,23 @@
       },
       "2" : {
         "name" : "おにぎり",
-        "quantity" : 100
+        "quantity" : 200
       },
       "3" : {
         "name" : "タオル",
-        "quantity" : 20
+        "quantity" : 200
       },
       "4" : {
         "name" : "おむつ",
-        "quantity" : 0
+        "quantity" : 200
       },
       "5" : {
         "name" : "ティッシュ",
-        "quantity" : 0
+        "quantity" : 200
       }
     },
     "people" : 100,
-    "priority" : 1
+    "priority" : 7
   },
   {
     "areaId" : 2,
@@ -37,11 +37,11 @@
     "resources" : {
       "1" : {
         "name" : "水",
-        "quantity" : 0
+        "quantity" : 200
       },
       "2" : {
         "name" : "おにぎり",
-        "quantity" : 0
+        "quantity" : 200
       },
       "3" : {
         "name" : "タオル",
@@ -57,7 +57,7 @@
       }
     },
     "people" : 150,
-    "priority" : 2
+    "priority" : 6
   },
   {
     "areaId" : 3,
@@ -75,7 +75,7 @@
       },
       "3" : {
         "name" : "タオル",
-        "quantity" : 30
+        "quantity" : 200
       },
       "4" : {
         "name" : "おむつ",
@@ -83,17 +83,77 @@
       },
       "5" : {
         "name" : "ティッシュ",
-        "quantity" : 30
+        "quantity" : 150
       }
     },
     "people" : 130,
-    "priority" : 3
+    "priority" : 5
   },
   {
     "areaId" : 4,
     "areaName" : "熊本県",
     "lat" : "32.78972",
     "lon" : "130.74167",
+    "resources" : {
+      "1" : {
+        "name" : "水",
+        "quantity" : 0
+      },
+      "2" : {
+        "name" : "おにぎり",
+        "quantity" : 50
+      },
+      "3" : {
+        "name" : "タオル",
+        "quantity" : 100
+      },
+      "4" : {
+        "name" : "おむつ",
+        "quantity" : 140
+      },
+      "5" : {
+        "name" : "ティッシュ",
+        "quantity" : 50
+      }
+    },
+    "people" : 120,
+    "priority" : 4
+  },
+  {
+    "areaId" : 5,
+    "areaName" : "大分県",
+    "lat" : "33.23806",
+    "lon" : "131.6125",
+    "resources" : {
+      "1" : {
+        "name" : "水",
+        "quantity" : 80
+      },
+      "2" : {
+        "name" : "おにぎり",
+        "quantity" : 70
+      },
+      "3" : {
+        "name" : "タオル",
+        "quantity" : 0
+      },
+      "4" : {
+        "name" : "おむつ",
+        "quantity" : 80
+      },
+      "5" : {
+        "name" : "ティッシュ",
+        "quantity" : 60
+      }
+    },
+    "people" : 120,
+    "priority" : 3
+  },
+  {
+    "areaId" : 6,
+    "areaName" : "宮崎県",
+    "lat" : "31.91111",
+    "lon" : "131.42389",
     "resources" : {
       "1" : {
         "name" : "水",
@@ -117,67 +177,7 @@
       }
     },
     "people" : 120,
-    "priority" : 4
-  },
-  {
-    "areaId" : 5,
-    "areaName" : "大分県",
-    "lat" : "33.23806",
-    "lon" : "131.6125",
-    "resources" : {
-      "1" : {
-        "name" : "水",
-        "quantity" : 0
-      },
-      "2" : {
-        "name" : "おにぎり",
-        "quantity" : 0
-      },
-      "3" : {
-        "name" : "タオル",
-        "quantity" : 0
-      },
-      "4" : {
-        "name" : "おむつ",
-        "quantity" : 0
-      },
-      "5" : {
-        "name" : "ティッシュ",
-        "quantity" : 0
-      }
-    },
-    "people" : 120,
-    "priority" : 5
-  },
-  {
-    "areaId" : 6,
-    "areaName" : "宮崎県",
-    "lat" : "31.91111",
-    "lon" : "131.42389",
-    "resources" : {
-      "1" : {
-        "name" : "水",
-        "quantity" : 200
-      },
-      "2" : {
-        "name" : "おにぎり",
-        "quantity" : 200
-      },
-      "3" : {
-        "name" : "タオル",
-        "quantity" : 0
-      },
-      "4" : {
-        "name" : "おむつ",
-        "quantity" : 0
-      },
-      "5" : {
-        "name" : "ティッシュ",
-        "quantity" : 0
-      }
-    },
-    "people" : 120,
-    "priority" : 6
+    "priority" : 2
   },
   {
     "areaId" : 7,
@@ -199,14 +199,14 @@
       },
       "4" : {
         "name" : "おむつ",
-        "quantity" : 0
+        "quantity" : 20
       },
       "5" : {
         "name" : "ティッシュ",
-        "quantity" : 0
+        "quantity" : 30
       }
     },
     "people" : 120,
-    "priority" : 7
+    "priority" : 1
   }
 ]
