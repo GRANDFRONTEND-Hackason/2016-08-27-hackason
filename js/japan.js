@@ -112,15 +112,15 @@ function getAreaColor(areaName) {
 function displayIcon(index) {
 
     var images = [
-        'diaper.png',
-        'list.png',
-        'location.png',
-        'onigiri.png',
-        'priority.png',
-        'tissue.png',
-        'towel.png',
-        'volume.png',
-        'water.png'
+        'diaper_c.png',
+        'list_c.png',
+        'location_c.png',
+        'onigiri_c.png',
+        'priority_c.png',
+        'tissue_c.png',
+        'towel_c.png',
+        'volume_c.png',
+        'water_c.png'
     ];
 
     var icon = d3.select("svg")
