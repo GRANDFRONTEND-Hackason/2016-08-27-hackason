@@ -1,5 +1,15 @@
+var jsonData;
 
-var jsonData = [];
+var defaultColor = "#e5e5e5";
+var colors = [
+    "#e5e5e5",
+    "#303a97",
+    "#1fb8ec",
+    "#8fe934",
+    "#fffd38",
+    "#e3542a",
+    "#df0829"
+];
 
 displayMap();
 displayIcon(2);
@@ -10,8 +20,8 @@ xhr.send(null);
 xhr.onreadystatechange = function() {
     if( this.readyState == 4 && this.status == 200 ) {
         if( this.response ) {
-            jsonData = this.response;
-            console.log(jsonData);
+            var res = this.response;
+            jsonData = JSON.parse(res);
         }
     }
 }
@@ -51,12 +61,58 @@ function displayMap() {
         .attr("d", path)
         .attr("stroke", "black")
         .attr("stroke-width", 0.5)
-        .style("fill", "#90ee90")
+        .style("fill", function(e, i) {
+          return getAreaColor(e.properties.name_local);
+        })
         .on("mouseover", function(e) {
-          console.log(e.properties.name_local);
+
+            // d3.select(this)
+            // .style("fill", "white");
+
+            d3.select(this)
+            .transition()
+            .duration(100).ease('linear')
+            .attr("opacity",0.7)
+            .attr("transform","translate(0,-4)");            
+
+            for (var index in jsonData) {
+                var areaData = jsonData[index];
+                if (areaData.areaName == e.properties.name_local) {
+                    // console.log(areaData.areaName);
+                    // console.log(areaData.lat);
+                    // console.log(areaData.lon);
+                    // console.log(areaData.people);
+                    // console.log(areaData.priority);
+                    for (var index in areaData.resources) {
+                        var item = areaData.resources[index];
+                        // console.log(item.name);
+                        // console.log(item.quantity);
+                    }
+                }
+            }
+        })
+        .on("mouseout", function(e) {
+
+            d3.select(this)
+            .transition()
+            .duration(100).ease('linear')
+            .attr("opacity",1.0)
+            .attr("transform","translate(0,4)");  
         });
     });
 
+}
+
+function getAreaColor(areaName) {
+    for (var index in jsonData) {
+        var areaData = jsonData[index];
+        if (areaData.areaName == areaName) {
+            console.log(areaData.areaName);
+            console.log(areaData.priority);
+            return colors[areaData.priority - 1];
+        }
+    }
+    return defaultColor;
 }
 
 // アイコンの取得
