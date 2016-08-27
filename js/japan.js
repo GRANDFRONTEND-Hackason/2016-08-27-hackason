@@ -102,13 +102,6 @@ function displayMap() {
             .attr("rx", 10)
             .attr("ry", 10)
             .attr("opacity",0.8);
-            
-            svg.append("text")
-            .html(e.properties.name_local)
-            .attr('width', 50)
-            .attr('height', 50)
-            .attr('x', 40)
-            .attr('y', h - 270);
 
             appendAreaInfo(e.properties.name_local, 40, h - 270);
 
@@ -196,14 +189,21 @@ function appendAreaInfo(areaName, x, y) {
   var originX = x;
   var originY = y;
 
-  appendText(areaName, x, originY);
-  originY += 25;
-  appendText("優先順位 : " +  priority, x, originY);
-  originY += 25;
-  appendText("避難人数 : 100", x, originY);
-  originY += 25;
-  appendText("必要物資", x, originY);
-  originY += 30;
+  originY += 10;
+  appendText("　　 " + areaName, originX, originY);
+  displayIcon(2, originX, originY - 25, 40, 40);
+  originX += 150;
+  appendText("　　　緊急度 : " +  priority, originX, originY);
+  displayIcon(4, originX, originY - 30, 50, 50);
+  originX += 150;
+  appendText("　　　避難人数 : 100", originX, originY);
+  displayIcon(9, originX, originY - 30, 40, 40);
+  originX = x + 50;
+  originY += 80;
+  originX = x;
+  appendText("　　　 必要物資", originX, originY);
+  displayIcon(1, originX, originY - 30, 50, 50);
+  originY += 50;
 
   var resourceCount = 0;
   for (var i in resources) {
@@ -216,8 +216,8 @@ function appendAreaInfo(areaName, x, y) {
           appendText(resourceInfo, originX, originY);
           var index = iconIndexFromName(name);
           displayIcon(index, originX, originY - 25, 50, 50);
-          if (resourceCount % 2 == 0) {
-              originX += 200;
+          if (resourceCount % 3 != 2) {
+              originX += 150;
           } else {
               originX = x;
               originY += 50;
