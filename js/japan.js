@@ -1,6 +1,31 @@
 displayMap();
 displayIcon(2);
 displayGraph();
+var jsonData;
+
+var defaultColor = "#e5e5e5";
+var colors = [
+    "#e5e5e5",
+    "#303a97",
+    "#1fb8ec",
+    "#8fe934",
+    "#fffd38",
+    "#e3542a",
+    "#df0829"
+];
+
+var xhr = new XMLHttpRequest;
+xhr.open('GET', 'json/data.json', true);
+xhr.send(null);
+xhr.onreadystatechange = function() {
+    if( this.readyState == 4 && this.status == 200 ) {
+        if( this.response ) {
+            var res = this.response;
+            jsonData = JSON.parse(res);
+            displayMap();
+        }
+    }
+}
 
 // 日本地図の描画
 function displayMap() {
@@ -37,30 +62,89 @@ function displayMap() {
         .attr("d", path)
         .attr("stroke", "black")
         .attr("stroke-width", 0.5)
-        .style("fill", "#90ee90"); 
+        .style("fill", function(e, i) {
+            return getAreaColor(e.properties.name_local);
+        })
+        .on("mouseover", function(e) {
+            d3.select(this)
+            .transition()
+            .duration(100).ease('linear')
+            .attr("opacity",0.7)
+            .attr("transform","translate(0,-4)");            
+
+            for (var index in jsonData) {
+                var areaData = jsonData[index];
+                if (areaData.areaName == e.properties.name_local) {
+                    // console.log(areaData.areaName);
+                    // console.log(areaData.lat);
+                    // console.log(areaData.lon);
+                    // console.log(areaData.people);
+                    // console.log(areaData.priority);
+                    for (var index in areaData.resources) {
+                        var item = areaData.resources[index];
+                        // console.log(item.name);
+                        // console.log(item.quantity);
+                    }
+                }
+            }
+            
+            svg.append("rect")
+            .attr("x",30)
+            .attr("y",700)
+            .attr("width",600)
+            .attr("height",240)
+            .attr("fill","gray");
+            
+            svg.append("text")
+            .html(e.properties.name_local)
+            .attr('width', 100)
+            .attr('height', 100)
+            .attr('x', 50)
+            .attr('y', 750);
+            
+        })
+        .on("mouseout", function(e) {
+            svg.select("text").remove();
+            svg.select("rect").remove();
+            
+            d3.select(this)
+            .transition()
+            .duration(100).ease('linear')
+            .attr("opacity",1.0)
+            .attr("transform","translate(0,4)");
+        });
     });
 
+}
+
+function getAreaColor(areaName) {
+    for (var index in jsonData) {
+        var areaData = jsonData[index];
+        if (areaData.areaName == areaName) {
+            return colors[areaData.priority - 1];
+        }
+    }
+    return defaultColor;
 }
 
 // アイコンの取得
 function displayIcon(index) {
 
     var images = [
-        'https://assets-cdn.github.com/images/modules/open_graph/github-octocat.png',
-        'http://jsrun.it/assets/t/9/p/m/t9pm6.jpg',
-        'http://jsrun.it/assets/1/E/m/P/1EmPa.jpg',
-        'http://jsrun.it/assets/z/m/t/G/zmtGr.jpg',
-        'http://jsrun.it/assets/j/m/K/P/jmKP9.jpg',
-        'http://jsrun.it/assets/s/R/9/y/sR9yF.jpg',
-        'http://jsrun.it/assets/g/G/C/m/gGCmv.jpg',
-        'http://jsrun.it/assets/4/K/T/B/4KTBL.jpg',
-        'http://jsrun.it/assets/l/f/V/0/lfV0z.jpg',
-        'http://jsrun.it/assets/h/g/0/5/hg05Z.jpg'
+        'diaper.png',
+        'list.png',
+        'location.png',
+        'onigiri.png',
+        'priority.png',
+        'tissue.png',
+        'towel.png',
+        'volume.png',
+        'water.png'
     ];
 
-    var images = d3.select("svg")
+    var icon = d3.select("svg")
         .append('image')
-        .attr('xlink:href', images[index])
+        .attr('xlink:href', 'images/' + images[index])
         .attr('width', 100)
         .attr('height', 100)
         .attr('clip-path', 'url(#clip)')
