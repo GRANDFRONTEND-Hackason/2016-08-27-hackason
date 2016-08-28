@@ -390,7 +390,7 @@ function graphColor(index) {
       color = "#bbdefa";
       break;
     case 4:
-      color = "#bbdefa";
+      color = "#e4f0fa";
       break;
     default:
       break;
