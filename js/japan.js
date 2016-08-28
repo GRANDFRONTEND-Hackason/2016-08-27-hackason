@@ -252,17 +252,17 @@ function displayGraph() {
 
     // 表示サイズを設定
     var size = {
-      width: (w/3.4),
-      height:(w/3.4)
+      width: (320),
+      height:(320)
     };
 
     // 円グラフの表示データ
     var data = [
-        {legend:"おにぎり", value:40, color:"#e74c3c"},
-        {legend:"水", value:10, color:"#f39c12"},
-        {legend:"おむつ", value:15, color:"#16a085"},
-        {legend:"ティッシュ", value:25, color:"#d35400"},
-        {legend:"タオル", value:30, color:"#2c3e50"}
+        {legend:"おにぎり", value:30, color:"#1770c8"},
+        {legend:"水", value:15, color:"#42a5f3"},
+        {legend:"おむつ", value:12, color:"#90caf3"},
+        {legend:"ティッシュ", value:10, color:"#bbdefa"},
+        {legend:"タオル", value:10, color:"#bbdefa"}
     ];
 
     // SVG要素生成
@@ -271,8 +271,7 @@ function displayGraph() {
         .attr("id", "chart");
 
     // d3用の変数
-    var svg = d3.select("#chart"),
-        pie = d3.layout.pie().sort(null).value(function(d){ return d.value; }),
+    var pie = d3.layout.pie().sort(null).value(function(d){ return d.value; }),
         arc = d3.svg.arc().innerRadius(0).outerRadius(size.width / 2);
 
     // グループの作成
@@ -286,7 +285,8 @@ function displayGraph() {
     // 円弧の作成
     g.append("path")
         .attr("d", arc)
-        .attr("stroke", "white")
+        .attr("stroke", bgColor)
+        .attr("stroke-width", 1)
         .attr("fill", function(d){ return d.data.color; });
 
     // データの表示
@@ -294,21 +294,28 @@ function displayGraph() {
 
     // データの表示
     g.append("text")
-        .attr("dy", ".35em")
-        .attr("font-size", function(d){ return d.value / maxValue * 20; })
-        .style("text-anchor", "middle")
-        .text(function(d){ return d.data.legend; });
+      .attr("dy", ".35em")
+      .attr("font-size", function(d){ return (d.value / maxValue * 20 > 14) ? (d.value / maxValue * 20 > 14) : 14 ; })
+      .style("fill", function(d){
+        if (d.data.legend == "おにぎり") {
+          return "#fff"; 
+        } else {
+          return "#000"; 
+        }
+      })
+      .style("text-anchor", "middle")
+      .text(function(d){ return d.data.legend; });
 
     // テキストの位置を再調整
     g.selectAll("text").attr("transform", function(d){ return "translate(" + arc.centroid(d) + ")"; });
 
     // 描画位置調整
     var target = document.getElementById("chart");
-    target.style.width=size.width;
-    target.style.height=size.height;
-    target.style.position="relative";
-    target.style.top="-" + (size.width * 1.1) + "px";
-    target.style.left=(size.height * 9 / 4) + "px";
+    target.style.width = size.width;
+    target.style.height = size.height;
+    target.style.position = "absolute";
+    target.style.bottom = "40px";
+    target.style.right = "40px";
 }
 
 function iconIndexFromName(name) {
