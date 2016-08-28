@@ -347,6 +347,26 @@ function displayGraph() {
     
 }
 
+function createGraphData(areaName) {
+  var areaData = getAreaData(areaName);
+  var resources = areaData.resources
+
+  // 円グラフの表示データ
+  var data = [];
+  var index = 0;
+  for (var i in resources) {
+    var resource = resources[i];
+    if (resource.quantity != 0) {
+      var colorRatio = Math.floor(index / resources.length * 255);
+      data[index++] = {
+        legend : resource.name,
+        value : resource.quantity,
+        color : ('' + colorRatio, '' + colorRatio, '' + colorRatio)
+      }
+    }
+  }
+  return data;
+}
 
 function iconIndexFromName(name) {
   if (name == "おにぎり") {
