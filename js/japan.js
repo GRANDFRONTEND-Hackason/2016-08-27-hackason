@@ -292,11 +292,7 @@ function displayGraph(areaName) {
       .attr("dy", ".35em")
       .attr("font-size", function(d){ return (d.value / maxValue * 20 > 14) ? (d.value / maxValue * 20 > 14) : 14 ; })
       .style("fill", function(d){
-        if (d.data.legend == "おにぎり") {
-          return "#fff"; 
-        } else {
-          return "#000"; 
-        }
+        return bgColor;
       })
       .style("text-anchor", "middle")
       .text(function(d){ return d.data.legend; });
