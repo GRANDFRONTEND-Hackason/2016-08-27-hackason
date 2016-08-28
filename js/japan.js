@@ -25,7 +25,6 @@ xhr.onreadystatechange = function() {
             var res = this.response;
             jsonData = JSON.parse(res);
             displayMap();
-            displayGraph();
         }
     }
 }
@@ -174,11 +173,13 @@ function displayMap() {
 
             appendAreaInfo(e.properties.name_local, 40, h - 270);
 
+            displayGraph(e.properties.name_local);
         })
         .on("mouseout", function(e) {
             svg.select("rect").remove();
             svg.selectAll("text").remove();
             svg.selectAll(".icon").remove();
+            d3.selectAll("#chart").remove();
 
             d3.select(this)
             .transition()
@@ -312,7 +313,7 @@ function appendText(text, x, y) {
 }
 
 // 円グラフ表示
-function displayGraph() {
+function displayGraph(areaName) {
     var w = d3.select("body").node().getBoundingClientRect().width;
     var h = d3.select("body").node().getBoundingClientRect().height;
 
@@ -323,13 +324,7 @@ function displayGraph() {
     };
 
     // 円グラフの表示データ
-    var data = [
-        {legend:"おにぎり", value:30, color:"#1770c8"},
-        {legend:"水", value:15, color:"#42a5f3"},
-        {legend:"おむつ", value:12, color:"#90caf3"},
-        {legend:"ティッシュ", value:10, color:"#bbdefa"},
-        {legend:"タオル", value:10, color:"#bbdefa"}
-    ];
+    var data = createGraphData(areaName);
 
     // SVG要素生成
     var svg = d3.select("body")
@@ -363,11 +358,7 @@ function displayGraph() {
       .attr("dy", ".35em")
       .attr("font-size", function(d){ return (d.value / maxValue * 20 > 14) ? (d.value / maxValue * 20 > 14) : 14 ; })
       .style("fill", function(d){
-        if (d.data.legend == "おにぎり") {
-          return "#fff"; 
-        } else {
-          return "#000"; 
-        }
+        return bgColor;
       })
       .style("text-anchor", "middle")
       .text(function(d){ return d.data.legend; });
@@ -382,6 +373,56 @@ function displayGraph() {
     target.style.position = "absolute";
     target.style.bottom = "40px";
     target.style.right = "40px";
+
+    // グラフのアニメーション設定
+    function animate(){
+        var g = svg.selectAll(".arc"),
+        length = data.length,
+        i = 0;
+
+        g.selectAll("path")
+        .transition()
+        .ease("cubic-out")
+        .duration(1000)
+        .attrTween("d", function(d){
+                   var interpolate = d3.interpolate(
+                                                    {startAngle: 0, endAngle: 0},
+                                                    {startAngle: d.startAngle, endAngle: d.endAngle}
+                                                    );
+                   return function(t){
+                   return arc(interpolate(t));
+                   };
+                   })
+        .each("end", function(transition, callback){
+              i++;
+              isAnimated = i === length; //最後の要素の時だけtrue
+              });
+    }
+    
+    animate();
+    
+}
+
+function createGraphData(areaName) {
+  var areaData = getAreaData(areaName);
+  var resources = areaData.resources
+
+  // 円グラフの表示データ
+  var data = [];
+  var index = 0;
+  for (var i in resources) {
+    var resource = resources[i];
+    if (resource.quantity != 0) {
+      var colorRatio = Math.floor(index / resources.length * 255);
+      data[index] = {
+        legend : resource.name,
+        value : resource.quantity,
+        color : graphColor(index)
+      }
+      index++;
+    }
+  }
+  return data;
 }
 
 function iconIndexFromName(name) {
@@ -397,4 +438,28 @@ function iconIndexFromName(name) {
       return 5;
   }
   return -1;
+}
+
+function graphColor(index) {
+  var color = "";
+  switch (index) {
+    case 0:
+      color = "#1770c8";
+      break;
+    case 1:
+      color = "#42a5f3";
+      break;
+    case 2:
+      color = "#90caf3";
+      break;
+    case 3:
+      color = "#bbdefa";
+      break;
+    case 4:
+      color = "#bbdefa";
+      break;
+    default:
+      break;
+  }
+  return color;
 }
