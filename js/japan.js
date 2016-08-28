@@ -316,7 +316,37 @@ function displayGraph() {
     target.style.position = "absolute";
     target.style.bottom = "40px";
     target.style.right = "40px";
+    
+    // グラフのアニメーション設定
+    function animate(){
+        var g = svg.selectAll(".arc"),
+        length = data.length,
+        i = 0;
+        
+        g.selectAll("path")
+        .transition()
+        .ease("cubic-out")
+        .delay(500)
+        .duration(1000)
+        .attrTween("d", function(d){
+                   var interpolate = d3.interpolate(
+                                                    {startAngle: 0, endAngle: 0},
+                                                    {startAngle: d.startAngle, endAngle: d.endAngle}
+                                                    );
+                   return function(t){
+                   return arc(interpolate(t));
+                   };
+                   })
+        .each("end", function(transition, callback){
+              i++;
+              isAnimated = i === length; //最後の要素の時だけtrue
+              });
+    }
+    
+    animate();
+    
 }
+
 
 function iconIndexFromName(name) {
   if (name == "おにぎり") {
