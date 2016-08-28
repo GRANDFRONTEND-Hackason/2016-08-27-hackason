@@ -12,7 +12,9 @@ var colors = [
     "#b71c1c"
 ];
 
+// 背景描画
 d3.select("body").style("background-color", bgColor);
+displayBgLine();
 
 var xhr = new XMLHttpRequest;
 xhr.open('GET', 'json/data.json', true);
@@ -23,23 +25,105 @@ xhr.onreadystatechange = function() {
             var res = this.response;
             jsonData = JSON.parse(res);
             displayMap();
-            displayGraph();
         }
     }
+}
+
+function displayBgLine() {
+
+    var w = d3.select("body").node().getBoundingClientRect().width;
+    var h = d3.select("body").node().getBoundingClientRect().height;
+
+    var svg = d3.select("body")
+      .append("svg")
+      .attr("id", "bgline")
+      .attr("width", w)
+      .attr("height", h)
+      .attr("x", 0)
+      .attr("y", 0);
+
+    var currentX = 0; 
+    var currentY = 0; 
+
+    while (w > currentX) { 
+
+      currentX += 80;
+
+      var line = d3.svg.line()
+      .x(function(d) {return d[0];})
+      .y(function(d) {return d[1];});
+
+      var start = [currentX, 0];
+      var end = [currentX, h];
+      var linePath = [start, end];
+
+      // path要素を作成
+      var path = svg.append('path')
+        .attr({
+          'd': line(linePath),
+          'stroke': 'white',
+          'opacity': 0.3,
+          'stroke-width': 1,
+          'fill': 'none',
+      });
+
+    }
+
+    while (h > currentY) { 
+
+      currentY += 80;
+
+      var line = d3.svg.line()
+      .x(function(d) {return d[0];})
+      .y(function(d) {return d[1];});
+
+      var start = [0, currentY];
+      var end = [w, currentY];
+      var linePath = [start, end];
+
+      // path要素を作成
+      var path = svg.append('path')
+        .attr({
+          'd': line(linePath),
+          'stroke': 'white',
+          'opacity': 0.3,
+          'stroke-width': 1,
+          'fill': 'none',
+      });
+
+    }
+
+    // 描画位置調整
+    var target = document.getElementById("bgline");
+    target.style.position = "absolute";
+    target.style.bottom = "0px";
+    target.style.right = "0px";
 }
 
 // 日本地図の描画
 function displayMap() {
 
-    d3.select("svg").remove();
     var w = d3.select("body").node().getBoundingClientRect().width;
     var h = d3.select("body").node().getBoundingClientRect().height;
 
     // SVG要素生成
     var svg = d3.select("body")
         .append("svg")
+        .attr("id", "map")
         .attr("width", w)
-        .attr("height", h);
+        .attr("height", h)
+        .attr("x", 0)
+        .attr("y", 0);
+
+    // 凡例
+    var jiku = d3.select("#map")
+        .append('image')
+        .attr('xlink:href', 'images/jiku.png')
+        .attr('width', 45)
+        .attr('height', 350)
+        .attr('clip-path', 'url(#clip)')
+        .attr('x', 40)
+        .attr('y', 20);
 
     // 日本地図データ読み込み
     d3.json("../json/japan.topojson", function(json) {
@@ -77,22 +161,6 @@ function displayMap() {
             .attr("opacity",1.0)
             .attr("transform","translate(0,-4)");
 
-            for (var index in jsonData) {
-                var areaData = jsonData[index];
-                if (areaData.areaName == e.properties.name_local) {
-                    // console.log(areaData.areaName);
-                    // console.log(areaData.lat);
-                    // console.log(areaData.lon);
-                    // console.log(areaData.people);
-                    // console.log(areaData.priority);
-                    for (var index in areaData.resources) {
-                        var item = areaData.resources[index];
-                        // console.log(item.name);
-                        // console.log(item.quantity);
-                    }
-                }
-            }
-
             svg.append("rect")
             .attr("x",30)
             .attr("y",h - 300)
@@ -105,11 +173,13 @@ function displayMap() {
 
             appendAreaInfo(e.properties.name_local, 40, h - 270);
 
+            displayGraph(e.properties.name_local);
         })
         .on("mouseout", function(e) {
             svg.select("rect").remove();
             svg.selectAll("text").remove();
             svg.selectAll(".icon").remove();
+            d3.selectAll("#chart").remove();
 
             d3.select(this)
             .transition()
@@ -119,14 +189,11 @@ function displayMap() {
         });
     });
 
-    var icon = d3.select("svg")
-        .append('image')
-        .attr('xlink:href', 'images/jiku.png')
-        .attr('width', 45)
-        .attr('height', 350)
-        .attr('clip-path', 'url(#clip)')
-        .attr('x', 40)
-        .attr('y', 20);
+    // 描画位置調整
+    var target = document.getElementById("map");
+    target.style.position = "absolute";
+    target.style.bottom = "0px";
+    target.style.right = "0px";
 
 }
 
@@ -157,7 +224,7 @@ function displayIcon(index, x, y, width, height) {
         'kinkyu.png'
     ];
 
-    var icon = d3.select("svg")
+    var icon = d3.select("#map")
         .append('image')
         .attr('class', 'icon')
         .attr('xlink:href', 'images/' + images[index])
@@ -236,7 +303,7 @@ function appendAreaInfo(areaName, x, y) {
 }
 
 function appendText(text, x, y) {
-  var svg = d3.select("svg");
+  var svg = d3.select("#map");
   svg.append("text")
   .html(text)
   .attr('width', 100)
@@ -246,7 +313,7 @@ function appendText(text, x, y) {
 }
 
 // 円グラフ表示
-function displayGraph() {
+function displayGraph(areaName) {
     var w = d3.select("body").node().getBoundingClientRect().width;
     var h = d3.select("body").node().getBoundingClientRect().height;
 
@@ -257,13 +324,7 @@ function displayGraph() {
     };
 
     // 円グラフの表示データ
-    var data = [
-        {legend:"おにぎり", value:30, color:"#1770c8"},
-        {legend:"水", value:15, color:"#42a5f3"},
-        {legend:"おむつ", value:12, color:"#90caf3"},
-        {legend:"ティッシュ", value:10, color:"#bbdefa"},
-        {legend:"タオル", value:10, color:"#bbdefa"}
-    ];
+    var data = createGraphData(areaName);
 
     // SVG要素生成
     var svg = d3.select("body")
@@ -297,11 +358,7 @@ function displayGraph() {
       .attr("dy", ".35em")
       .attr("font-size", function(d){ return (d.value / maxValue * 20 > 14) ? (d.value / maxValue * 20 > 14) : 14 ; })
       .style("fill", function(d){
-        if (d.data.legend == "おにぎり") {
-          return "#fff"; 
-        } else {
-          return "#000"; 
-        }
+        return bgColor;
       })
       .style("text-anchor", "middle")
       .text(function(d){ return d.data.legend; });
@@ -316,6 +373,56 @@ function displayGraph() {
     target.style.position = "absolute";
     target.style.bottom = "40px";
     target.style.right = "40px";
+
+    // グラフのアニメーション設定
+    function animate(){
+        var g = svg.selectAll(".arc"),
+        length = data.length,
+        i = 0;
+
+        g.selectAll("path")
+        .transition()
+        .ease("cubic-out")
+        .duration(1000)
+        .attrTween("d", function(d){
+                   var interpolate = d3.interpolate(
+                                                    {startAngle: 0, endAngle: 0},
+                                                    {startAngle: d.startAngle, endAngle: d.endAngle}
+                                                    );
+                   return function(t){
+                   return arc(interpolate(t));
+                   };
+                   })
+        .each("end", function(transition, callback){
+              i++;
+              isAnimated = i === length; //最後の要素の時だけtrue
+              });
+    }
+    
+    animate();
+    
+}
+
+function createGraphData(areaName) {
+  var areaData = getAreaData(areaName);
+  var resources = areaData.resources
+
+  // 円グラフの表示データ
+  var data = [];
+  var index = 0;
+  for (var i in resources) {
+    var resource = resources[i];
+    if (resource.quantity != 0) {
+      var colorRatio = Math.floor(index / resources.length * 255);
+      data[index] = {
+        legend : resource.name,
+        value : resource.quantity,
+        color : graphColor(index)
+      }
+      index++;
+    }
+  }
+  return data;
 }
 
 function iconIndexFromName(name) {
@@ -331,4 +438,28 @@ function iconIndexFromName(name) {
       return 5;
   }
   return -1;
+}
+
+function graphColor(index) {
+  var color = "";
+  switch (index) {
+    case 0:
+      color = "#1770c8";
+      break;
+    case 1:
+      color = "#42a5f3";
+      break;
+    case 2:
+      color = "#90caf3";
+      break;
+    case 3:
+      color = "#bbdefa";
+      break;
+    case 4:
+      color = "#e4f0fa";
+      break;
+    default:
+      break;
+  }
+  return color;
 }
