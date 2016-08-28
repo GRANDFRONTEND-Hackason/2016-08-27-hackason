@@ -104,7 +104,7 @@ function displayMap() {
 
             appendAreaInfo(e.properties.name_local, 40, h - 270);
 
-            displayGraph();
+            displayGraph(e.properties.name_local);
         })
         .on("mouseout", function(e) {
             svg.select("rect").remove();
@@ -247,7 +247,7 @@ function appendText(text, x, y) {
 }
 
 // 円グラフ表示
-function displayGraph() {
+function displayGraph(areaName) {
     var w = d3.select("body").node().getBoundingClientRect().width;
     var h = d3.select("body").node().getBoundingClientRect().height;
 
@@ -258,13 +258,7 @@ function displayGraph() {
     };
 
     // 円グラフの表示データ
-    var data = [
-        {legend:"おにぎり", value:30, color:"#1770c8"},
-        {legend:"水", value:15, color:"#42a5f3"},
-        {legend:"おむつ", value:12, color:"#90caf3"},
-        {legend:"ティッシュ", value:10, color:"#bbdefa"},
-        {legend:"タオル", value:10, color:"#bbdefa"}
-    ];
+    var data = createGraphData(areaName);
 
     // SVG要素生成
     var svg = d3.select("body")
@@ -358,11 +352,12 @@ function createGraphData(areaName) {
     var resource = resources[i];
     if (resource.quantity != 0) {
       var colorRatio = Math.floor(index / resources.length * 255);
-      data[index++] = {
+      data[index] = {
         legend : resource.name,
         value : resource.quantity,
-        color : ('' + colorRatio, '' + colorRatio, '' + colorRatio)
+        color : graphColor(index)
       }
+      index++;
     }
   }
   return data;
@@ -381,4 +376,28 @@ function iconIndexFromName(name) {
       return 5;
   }
   return -1;
+}
+
+function graphColor(index) {
+  var color = "";
+  switch (index) {
+    case 0:
+      color = "#1770c8";
+      break;
+    case 1:
+      color = "#42a5f3";
+      break;
+    case 2:
+      color = "#90caf3";
+      break;
+    case 3:
+      color = "#bbdefa";
+      break;
+    case 4:
+      color = "#bbdefa";
+      break;
+    default:
+      break;
+  }
+  return color;
 }
