@@ -23,7 +23,6 @@ xhr.onreadystatechange = function() {
             var res = this.response;
             jsonData = JSON.parse(res);
             displayMap();
-            displayGraph();
         }
     }
 }
@@ -105,11 +104,13 @@ function displayMap() {
 
             appendAreaInfo(e.properties.name_local, 40, h - 270);
 
+            displayGraph();
         })
         .on("mouseout", function(e) {
             svg.select("rect").remove();
             svg.selectAll("text").remove();
             svg.selectAll(".icon").remove();
+            d3.selectAll("#chart").remove();
 
             d3.select(this)
             .transition()
